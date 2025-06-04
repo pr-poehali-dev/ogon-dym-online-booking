@@ -19,7 +19,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <Link to="/" className="text-2xl font-bold text-primary">
-            Ресторан
+            Огонь и Дым
           </Link>
 
           <div className="hidden md:flex space-x-4">
