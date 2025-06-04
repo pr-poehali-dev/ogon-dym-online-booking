@@ -80,17 +80,18 @@ const ContactSection = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <div className="h-96 bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-slate-300">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">🗺️</div>
-                  <p className="text-lg font-medium mb-2">Карта</p>
-                  <p className="text-sm">ул. Луначарского, 32</p>
-                  <p className="text-sm text-slate-400 mt-2">
-                    В самом центре города
-                    <br />
-                    Удобная парковка
-                  </p>
-                </div>
+              <div className="h-96 relative overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2229.8674!2d56.2431!3d58.0105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x43e8c6c6d6c6c6c6%3A0x1!2z0YPQuy4g0JvRg9C90LDRh9Cw0YDRgdC60L7Qs9C-LCAzMiwg0J_QtdGA0LzRjCwg0J_QtdGA0LzRgdC60LjQuSDQutGA0LDQuSwgUlVTU0lB!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="grayscale hover:grayscale-0 transition-all duration-300"
+                ></iframe>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-800/30 to-transparent pointer-events-none"></div>
               </div>
             </CardContent>
           </Card>

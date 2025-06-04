@@ -29,24 +29,32 @@ const TableSchemeSection = () => {
   const getTableColor = (table: Table) => {
     if (table.occupied) return "bg-red-500";
     if (selectedTable === table.id) return "bg-orange-500";
-    if (table.type === "vip") return "bg-purple-600";
-    if (table.type === "hookah") return "bg-orange-400";
-    return "bg-slate-600";
+    switch (table.type) {
+      case "vip":
+        return "bg-purple-500 hover:bg-purple-400";
+      case "hookah":
+        return "bg-blue-500 hover:bg-blue-400";
+      default:
+        return "bg-slate-500 hover:bg-slate-400";
+    }
   };
 
-  const getTableIcon = (type: string) => {
+  const getTableTypeIcon = (type: string) => {
     switch (type) {
       case "vip":
-        return "Crown";
+        return "👑";
       case "hookah":
-        return "Flame";
+        return "💨";
       default:
-        return "Users";
+        return "🪑";
     }
   };
 
   return (
-    <section className="py-20 bg-slate-900">
+    <section
+      id="tables"
+      className="py-20 bg-gradient-to-br from-slate-800 via-purple-900 to-slate-800"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white mb-4">
