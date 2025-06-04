@@ -75,6 +75,13 @@ const TableSchemeSection = () => {
                     </div>
                   </div>
 
+                  {/* Stage */}
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg text-sm font-bold shadow-lg">
+                      🎤 Сцена
+                    </div>
+                  </div>
+
                   {/* Tables Grid */}
                   <div className="grid grid-cols-6 gap-4 mb-6 min-h-80">
                     {Array.from({ length: 36 }, (_, index) => {
