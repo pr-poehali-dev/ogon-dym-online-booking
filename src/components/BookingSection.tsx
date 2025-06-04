@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Icon from "@/components/ui/icon";
 
 const BookingSection = () => {
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -10,6 +12,10 @@ const BookingSection = () => {
   const [guests, setGuests] = useState<string>("2");
   const [phone, setPhone] = useState<string>("");
   const [name, setName] = useState<string>("");
+
+  // Cancel booking state
+  const [cancelPhone, setCancelPhone] = useState<string>("");
+  const [cancelBookingId, setCancelBookingId] = useState<string>("");
 
   const timeSlots = [
     "18:00",
@@ -36,6 +42,18 @@ const BookingSection = () => {
     }
   };
 
+  const handleCancelBooking = () => {
+    if (cancelPhone && cancelBookingId) {
+      alert(
+        `Бронирование #${cancelBookingId} отменено. Если у вас есть вопросы, звоните по телефону ${cancelPhone}`,
+      );
+      setCancelPhone("");
+      setCancelBookingId("");
+    } else {
+      alert("Пожалуйста, введите номер телефона и ID бронирования");
+    }
+  };
+
   return (
     <section id="booking" className="py-20 bg-slate-50">
       <div className="container mx-auto px-4">
@@ -55,98 +73,175 @@ const BookingSection = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Calendar */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-slate-800">
-                  Выберите дату
-                </h3>
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  disabled={(date) => date < new Date()}
-                  className="rounded-md border shadow"
-                />
-              </div>
+            <Tabs defaultValue="book" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsTrigger value="book" className="flex items-center gap-2">
+                  <Icon name="Calendar" size={16} />
+                  Забронировать
+                </TabsTrigger>
+                <TabsTrigger value="cancel" className="flex items-center gap-2">
+                  <Icon name="X" size={16} />
+                  Отменить бронь
+                </TabsTrigger>
+              </TabsList>
 
-              {/* Booking form */}
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-800 mb-4">
-                    Детали бронирования
-                  </h3>
+              <TabsContent value="book">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Calendar */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-slate-800">
+                      Выберите дату
+                    </h3>
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      disabled={(date) => date < new Date()}
+                      className="rounded-md border shadow"
+                    />
+                  </div>
+
+                  {/* Booking form */}
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                        Детали бронирования
+                      </h3>
+
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Ваше имя
+                          </label>
+                          <Input
+                            placeholder="Введите ваше имя"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Телефон
+                          </label>
+                          <Input
+                            placeholder="+7 (xxx) xxx-xx-xx"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Количество гостей
+                          </label>
+                          <select
+                            className="w-full p-2 border border-gray-300 rounded-md"
+                            value={guests}
+                            onChange={(e) => setGuests(e.target.value)}
+                          >
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                              <option key={num} value={num}>
+                                {num} {num === 1 ? "гость" : "гостя"}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Время
+                          </label>
+                          <div className="grid grid-cols-3 gap-2">
+                            {timeSlots.map((time) => (
+                              <Button
+                                key={time}
+                                variant={
+                                  selectedTime === time ? "default" : "outline"
+                                }
+                                className="text-sm"
+                                onClick={() => setSelectedTime(time)}
+                              >
+                                {time}
+                              </Button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white py-3 text-lg"
+                      onClick={handleBooking}
+                    >
+                      🔥 Забронировать столик
+                    </Button>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="cancel">
+                <div className="max-w-md mx-auto space-y-6">
+                  <div className="text-center mb-6">
+                    <h3 className="text-xl font-semibold text-slate-800 mb-2">
+                      Отмена бронирования
+                    </h3>
+                    <p className="text-slate-600">
+                      Введите данные для поиска вашего бронирования
+                    </p>
+                  </div>
 
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Ваше имя
-                      </label>
-                      <Input
-                        placeholder="Введите ваше имя"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Телефон
+                        Номер телефона
                       </label>
                       <Input
                         placeholder="+7 (xxx) xxx-xx-xx"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        value={cancelPhone}
+                        onChange={(e) => setCancelPhone(e.target.value)}
                       />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Количество гостей
+                        ID бронирования
                       </label>
-                      <select
-                        className="w-full p-2 border border-gray-300 rounded-md"
-                        value={guests}
-                        onChange={(e) => setGuests(e.target.value)}
-                      >
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                          <option key={num} value={num}>
-                            {num} {num === 1 ? "гость" : "гостя"}
-                          </option>
-                        ))}
-                      </select>
+                      <Input
+                        placeholder="Например: BR2024001"
+                        value={cancelBookingId}
+                        onChange={(e) => setCancelBookingId(e.target.value)}
+                      />
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        Время
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {timeSlots.map((time) => (
-                          <Button
-                            key={time}
-                            variant={
-                              selectedTime === time ? "default" : "outline"
-                            }
-                            className="text-sm"
-                            onClick={() => setSelectedTime(time)}
-                          >
-                            {time}
-                          </Button>
-                        ))}
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+                      <div className="flex items-start gap-2">
+                        <Icon
+                          name="AlertTriangle"
+                          size={16}
+                          className="text-yellow-600 mt-0.5"
+                        />
+                        <div className="text-sm text-yellow-800">
+                          <p className="font-medium">Важно!</p>
+                          <p>
+                            ID бронирования был отправлен вам в SMS после
+                            подтверждения.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <Button
-                  className="w-full bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white py-3 text-lg"
-                  onClick={handleBooking}
-                >
-                  🔥 Забронировать столик
-                </Button>
-              </div>
-            </div>
+                  <Button
+                    className="w-full bg-red-500 hover:bg-red-600 text-white py-3"
+                    onClick={handleCancelBooking}
+                  >
+                    <Icon name="X" size={16} className="mr-2" />
+                    Отменить бронирование
+                  </Button>
+                </div>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>

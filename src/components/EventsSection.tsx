@@ -24,18 +24,19 @@ const EventsSection = () => {
       description: "Атмосферный джазовый вечер с известными музыкантами города",
       price: "от 2000₽",
       image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
+        "https://cdn.poehali.dev/files/ea9c8f5a-d797-4b7e-8c26-c1618d6482fe.png",
     },
     {
       id: 2,
-      title: "Танцы живота",
+      title: "Танцы живота с Айшей",
       date: "18 Июня",
       time: "21:30",
       type: "show",
       description:
-        "Завораживающее шоу восточных танцев в аутентичной атмосфере",
+        "Завораживающее шоу восточных танцев от профессиональной танцовщицы",
       price: "Бесплатно",
-      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400",
+      image:
+        "https://cdn.poehali.dev/files/0c20db88-189d-45c4-b8b9-62cc927a1cd1.jpg",
     },
     {
       id: 3,
@@ -50,15 +51,15 @@ const EventsSection = () => {
     },
     {
       id: 4,
-      title: "Мастер-класс по кальянам",
+      title: "Вечер с Вовочкой",
       date: "25 Июня",
       time: "18:00",
       type: "special",
       description:
-        "Изучите искусство приготовления идеального кальяна от мастера",
-      price: "от 3000₽",
+        "Встреча с легендарным Вовочкой - анекдоты и весёлые истории",
+      price: "от 2500₽",
       image:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+        "https://cdn.poehali.dev/files/ea9c8f5a-d797-4b7e-8c26-c1618d6482fe.png",
     },
   ];
 
@@ -114,7 +115,7 @@ const EventsSection = () => {
                 <img
                   src={event.image}
                   alt={event.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover brightness-90 contrast-110"
                 />
                 <div
                   className={`absolute top-4 left-4 bg-gradient-to-r ${getEventColor(event.type)} px-3 py-1 rounded-full text-white text-sm flex items-center gap-2`}
