@@ -95,6 +95,45 @@ const MenuSection = () => {
     },
   ];
 
+  const cocktails = [
+    {
+      name: "Мохито",
+      description: "Ром, мята, лайм, содовая",
+      price: "650 ₽",
+      popular: true,
+    },
+    {
+      name: "Олд Фэшн",
+      description: "Виски, биттер, сахар, апельсин",
+      price: "750 ₽",
+      popular: true,
+    },
+    {
+      name: "Космополитен",
+      description: "Водка, клюквенный сок, лайм",
+      price: "700 ₽",
+      popular: false,
+    },
+    {
+      name: "Виски Сауэр",
+      description: "Виски, лимонный сок, сахар, белок",
+      price: "720 ₽",
+      popular: false,
+    },
+    {
+      name: "Негрони",
+      description: "Джин, кампари, красный вермут",
+      price: "680 ₽",
+      popular: false,
+    },
+    {
+      name: "Маргарита",
+      description: "Текила, трипл сек, лайм, соль",
+      price: "650 ₽",
+      popular: true,
+    },
+  ];
+
   return (
     <section
       id="menu"
@@ -165,6 +204,40 @@ const MenuSection = () => {
                   </Card>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* Cocktails Menu */}
+          <div className="mt-12 lg:mt-0">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+              🍸 Барная карта
+            </h3>
+            <div className="grid grid-cols-1 gap-4">
+              {cocktails.map((cocktail, index) => (
+                <Card
+                  key={index}
+                  className="relative hover:shadow-lg transition-shadow bg-slate-900 border-slate-700"
+                >
+                  {cocktail.popular && (
+                    <div className="absolute -top-2 -right-2 bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                      ⭐ Топ
+                    </div>
+                  )}
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base text-white flex justify-between items-start">
+                      <span>{cocktail.name}</span>
+                      <span className="text-purple-400 font-bold">
+                        {cocktail.price}
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-300 text-sm">
+                      {cocktail.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
 
