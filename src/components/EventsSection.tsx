@@ -24,7 +24,7 @@ const EventsSection = () => {
       description: "Атмосферный джазовый вечер с известными музыкантами города",
       price: "от 2000₽",
       image:
-        "https://cdn.poehali.dev/files/ea9c8f5a-d797-4b7e-8c26-c1618d6482fe.png",
+        "https://cdn.poehali.dev/files/9de39fc7-3642-4d6f-a365-57161273160f.jpg",
     },
     {
       id: 2,
@@ -59,7 +59,7 @@ const EventsSection = () => {
         "Встреча с легендарным Вовочкой - анекдоты и весёлые истории",
       price: "от 2500₽",
       image:
-        "https://cdn.poehali.dev/files/ea9c8f5a-d797-4b7e-8c26-c1618d6482fe.png",
+        "https://cdn.poehali.dev/files/9de39fc7-3642-4d6f-a365-57161273160f.jpg",
     },
   ];
 
