@@ -56,18 +56,21 @@ const BookingSection = () => {
   };
 
   return (
-    <section id="booking" className="py-20 bg-slate-50">
+    <section
+      id="booking"
+      className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             Забронировать столик
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-xl text-slate-300">
             Выберите удобное время для незабываемого вечера
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto shadow-xl">
+        <Card className="max-w-4xl mx-auto shadow-xl bg-slate-800 border-slate-700">
           <CardHeader className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
             <CardTitle className="text-2xl text-center">
               Онлайн бронирование
@@ -90,7 +93,7 @@ const BookingSection = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Calendar */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-slate-800">
+                    <h3 className="text-lg font-semibold text-white">
                       Выберите дату
                     </h3>
                     <Calendar
@@ -98,46 +101,48 @@ const BookingSection = () => {
                       selected={selectedDate}
                       onSelect={setSelectedDate}
                       disabled={(date) => date < new Date()}
-                      className="rounded-md border shadow"
+                      className="rounded-md border border-slate-600 bg-slate-700 text-white"
                     />
                   </div>
 
                   {/* Booking form */}
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                      <h3 className="text-lg font-semibold text-white mb-4">
                         Детали бронирования
                       </h3>
 
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
                             Ваше имя
                           </label>
                           <Input
                             placeholder="Введите ваше имя"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
                             Телефон
                           </label>
                           <Input
                             placeholder="+7 (xxx) xxx-xx-xx"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
                             Количество гостей
                           </label>
                           <select
-                            className="w-full p-2 border border-gray-300 rounded-md"
+                            className="w-full p-2 border border-slate-600 rounded-md bg-slate-700 text-white"
                             value={guests}
                             onChange={(e) => setGuests(e.target.value)}
                           >
@@ -150,7 +155,7 @@ const BookingSection = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
                             Время начала
                           </label>
                           <div className="grid grid-cols-3 gap-2 mb-4">
@@ -172,7 +177,7 @@ const BookingSection = () => {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
                             Время окончания
                           </label>
                           <div className="grid grid-cols-3 gap-2">
@@ -211,45 +216,47 @@ const BookingSection = () => {
               <TabsContent value="cancel">
                 <div className="max-w-md mx-auto space-y-6">
                   <div className="text-center mb-6">
-                    <h3 className="text-xl font-semibold text-slate-800 mb-2">
+                    <h3 className="text-xl font-semibold text-white mb-2">
                       Отмена бронирования
                     </h3>
-                    <p className="text-slate-600">
+                    <p className="text-slate-300">
                       Введите данные для поиска вашего бронирования
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
                         Номер телефона
                       </label>
                       <Input
                         placeholder="+7 (xxx) xxx-xx-xx"
                         value={cancelPhone}
                         onChange={(e) => setCancelPhone(e.target.value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
                         ID бронирования
                       </label>
                       <Input
                         placeholder="Например: BR2024001"
                         value={cancelBookingId}
                         onChange={(e) => setCancelBookingId(e.target.value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                       />
                     </div>
 
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+                    <div className="bg-yellow-900/50 border border-yellow-700 rounded-md p-4">
                       <div className="flex items-start gap-2">
                         <Icon
                           name="AlertTriangle"
                           size={16}
-                          className="text-yellow-600 mt-0.5"
+                          className="text-yellow-400 mt-0.5"
                         />
-                        <div className="text-sm text-yellow-800">
+                        <div className="text-sm text-yellow-200">
                           <p className="font-medium">Важно!</p>
                           <p>
                             ID бронирования был отправлен вам в SMS после

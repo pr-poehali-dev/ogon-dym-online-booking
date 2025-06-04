@@ -48,11 +48,14 @@ const MenuSection = () => {
   ];
 
   return (
-    <section id="menu" className="py-20 bg-white">
+    <section
+      id="menu"
+      className="py-20 bg-gradient-to-br from-slate-800 via-purple-800 to-slate-800"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">Наше меню</h2>
-          <p className="text-xl text-slate-600">
+          <h2 className="text-4xl font-bold text-white mb-4">Наше меню</h2>
+          <p className="text-xl text-slate-300">
             Изысканные табачные миксы и напитки
           </p>
         </div>
@@ -60,14 +63,14 @@ const MenuSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Hookah Menu */}
           <div className="lg:col-span-2">
-            <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
               💨 Кальянное меню
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {hookahs.map((hookah, index) => (
                 <Card
                   key={index}
-                  className="relative hover:shadow-lg transition-shadow"
+                  className="relative hover:shadow-lg transition-shadow bg-slate-900 border-slate-700"
                 >
                   {hookah.popular && (
                     <div className="absolute -top-2 -right-2 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -75,15 +78,15 @@ const MenuSection = () => {
                     </div>
                   )}
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-lg text-slate-800 flex justify-between items-start">
+                    <CardTitle className="text-lg text-white flex justify-between items-start">
                       <span>{hookah.name}</span>
-                      <span className="text-purple-600 font-bold">
+                      <span className="text-orange-400 font-bold">
                         {hookah.price}
                       </span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-slate-600">{hookah.description}</p>
+                    <p className="text-slate-300">{hookah.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -92,19 +95,19 @@ const MenuSection = () => {
 
           {/* Drinks Menu */}
           <div>
-            <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
               ☕ Напитки
             </h3>
-            <Card className="shadow-lg">
+            <Card className="shadow-lg bg-slate-900 border-slate-700">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   {drinks.map((drink, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
+                      className="flex justify-between items-center py-2 border-b border-slate-700 last:border-b-0"
                     >
-                      <span className="text-slate-700">{drink.name}</span>
-                      <span className="font-semibold text-purple-600">
+                      <span className="text-slate-300">{drink.name}</span>
+                      <span className="font-semibold text-orange-400">
                         {drink.price}
                       </span>
                     </div>
