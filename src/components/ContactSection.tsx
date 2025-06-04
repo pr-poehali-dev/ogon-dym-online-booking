@@ -32,7 +32,7 @@ const ContactSection = () => {
                 <div className="text-2xl">📞</div>
                 <div>
                   <h3 className="font-semibold text-slate-800 mb-1">Телефон</h3>
-                  <p className="text-slate-600">+7 (342) 123-45-67</p>
+                  <p className="text-slate-600">+7 (342) 298-45-67</p>
                 </div>
               </div>
 
