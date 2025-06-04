@@ -14,9 +14,43 @@ const BookingSection = () => {
   const [phone, setPhone] = useState<string>("");
   const [name, setName] = useState<string>("");
 
+  // Pre-order state
+  const [selectedItems, setSelectedItems] = useState<{ [key: string]: number }>(
+    {},
+  );
+
   // Cancel booking state
   const [cancelPhone, setCancelPhone] = useState<string>("");
   const [cancelBookingId, setCancelBookingId] = useState<string>("");
+
+  // Menu items for pre-order
+  const menuItems = [
+    {
+      id: "classic",
+      name: "Классический микс",
+      category: "hookah",
+      price: 800,
+    },
+    { id: "tropical", name: "Тропический рай", category: "hookah", price: 950 },
+    { id: "berry", name: "Ягодный взрыв", category: "hookah", price: 900 },
+    {
+      id: "citrus",
+      name: "Цитрусовая свежесть",
+      category: "hookah",
+      price: 850,
+    },
+    {
+      id: "chocolate",
+      name: "Шоколадный десерт",
+      category: "hookah",
+      price: 1000,
+    },
+    { id: "spicy", name: "Огненный микс", category: "hookah", price: 1100 },
+    { id: "tea", name: "Чай зелёный/чёрный", category: "drink", price: 200 },
+    { id: "coffee", name: "Кофе американо", category: "drink", price: 250 },
+    { id: "lemonade", name: "Лимонад домашний", category: "drink", price: 350 },
+    { id: "smoothie", name: "Смузи ягодный", category: "drink", price: 450 },
+  ];
 
   const timeSlots = [
     "18:00",
@@ -33,11 +67,34 @@ const BookingSection = () => {
     "23:30",
   ];
 
+  const handleItemChange = (itemId: string, quantity: number) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [itemId]: quantity,
+    }));
+  };
+
+  const getTotalPreorderAmount = () => {
+    return Object.entries(selectedItems).reduce((total, [itemId, quantity]) => {
+      const item = menuItems.find((i) => i.id === itemId);
+      return total + (item ? item.price * quantity : 0);
+    }, 0);
+  };
+
   const handleBooking = () => {
     if (selectedDate && selectedStartTime && selectedEndTime && name && phone) {
-      alert(
-        `Спасибо, ${name}! Ваш столик на ${guests} человек забронирован на ${selectedDate.toLocaleDateString()} с ${selectedStartTime} до ${selectedEndTime}. Мы свяжемся с вами по номеру ${phone}`,
-      );
+      const preorderSummary = Object.entries(selectedItems)
+        .filter(([_, quantity]) => quantity > 0)
+        .map(([itemId, quantity]) => {
+          const item = menuItems.find((i) => i.id === itemId);
+          return `${item?.name} x${quantity}`;
+        })
+        .join(", ");
+
+      const totalAmount = getTotalPreorderAmount();
+      const message = `Спасибо, ${name}! Ваш столик на ${guests} человек забронирован на ${selectedDate.toLocaleDateString()} с ${selectedStartTime} до ${selectedEndTime}.${preorderSummary ? `\n\nПредварительный заказ:\n${preorderSummary}\nСумма: ${totalAmount} ₽` : ""}\n\nМы свяжемся с вами по номеру ${phone}`;
+
+      alert(message);
     } else {
       alert("Пожалуйста, заполните все поля");
     }
@@ -200,6 +257,110 @@ const BookingSection = () => {
                             ))}
                           </div>
                         </div>
+                      </div>
+                    </div>
+
+                    {/* Pre-order section */}
+                    <div className="border-t border-slate-600 pt-6">
+                      <h4 className="text-lg font-semibold text-white mb-4">
+                        Предварительный заказ (опционально)
+                      </h4>
+
+                      <div className="space-y-4">
+                        <div>
+                          <h5 className="text-md font-medium text-slate-300 mb-3">
+                            Кальяны
+                          </h5>
+                          <div className="space-y-2">
+                            {menuItems
+                              .filter((item) => item.category === "hookah")
+                              .map((item) => (
+                                <div
+                                  key={item.id}
+                                  className="flex items-center justify-between bg-slate-700/50 p-3 rounded-lg"
+                                >
+                                  <div className="flex-1">
+                                    <span className="text-white text-sm">
+                                      {item.name}
+                                    </span>
+                                    <span className="text-slate-400 text-sm ml-2">
+                                      {item.price} ₽
+                                    </span>
+                                  </div>
+                                  <select
+                                    className="w-16 p-1 bg-slate-600 border border-slate-500 rounded text-white text-sm"
+                                    value={selectedItems[item.id] || 0}
+                                    onChange={(e) =>
+                                      handleItemChange(
+                                        item.id,
+                                        parseInt(e.target.value),
+                                      )
+                                    }
+                                  >
+                                    {[0, 1, 2, 3].map((num) => (
+                                      <option key={num} value={num}>
+                                        {num}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <h5 className="text-md font-medium text-slate-300 mb-3">
+                            Напитки
+                          </h5>
+                          <div className="space-y-2">
+                            {menuItems
+                              .filter((item) => item.category === "drink")
+                              .map((item) => (
+                                <div
+                                  key={item.id}
+                                  className="flex items-center justify-between bg-slate-700/50 p-3 rounded-lg"
+                                >
+                                  <div className="flex-1">
+                                    <span className="text-white text-sm">
+                                      {item.name}
+                                    </span>
+                                    <span className="text-slate-400 text-sm ml-2">
+                                      {item.price} ₽
+                                    </span>
+                                  </div>
+                                  <select
+                                    className="w-16 p-1 bg-slate-600 border border-slate-500 rounded text-white text-sm"
+                                    value={selectedItems[item.id] || 0}
+                                    onChange={(e) =>
+                                      handleItemChange(
+                                        item.id,
+                                        parseInt(e.target.value),
+                                      )
+                                    }
+                                  >
+                                    {[0, 1, 2, 3, 4, 5].map((num) => (
+                                      <option key={num} value={num}>
+                                        {num}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+
+                        {getTotalPreorderAmount() > 0 && (
+                          <div className="bg-orange-900/30 border border-orange-700 rounded-lg p-4">
+                            <div className="flex justify-between items-center text-white">
+                              <span className="font-medium">
+                                Сумма предзаказа:
+                              </span>
+                              <span className="text-lg font-bold text-orange-300">
+                                {getTotalPreorderAmount()} ₽
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
