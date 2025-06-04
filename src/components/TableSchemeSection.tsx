@@ -16,14 +16,14 @@ const TableSchemeSection = () => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
 
   const tables: Table[] = [
-    { id: 1, seats: 2, type: "regular", occupied: false, x: 10, y: 10 },
-    { id: 2, seats: 4, type: "hookah", occupied: true, x: 50, y: 15 },
-    { id: 3, seats: 2, type: "regular", occupied: false, x: 80, y: 20 },
-    { id: 4, seats: 6, type: "vip", occupied: false, x: 15, y: 40 },
-    { id: 5, seats: 4, type: "hookah", occupied: false, x: 60, y: 45 },
-    { id: 6, seats: 2, type: "regular", occupied: false, x: 85, y: 50 },
-    { id: 7, seats: 8, type: "vip", occupied: false, x: 30, y: 70 },
-    { id: 8, seats: 4, type: "hookah", occupied: true, x: 70, y: 75 },
+    { id: 1, seats: 2, type: "regular", occupied: false, x: 1, y: 1 },
+    { id: 2, seats: 4, type: "hookah", occupied: true, x: 3, y: 1 },
+    { id: 3, seats: 2, type: "regular", occupied: false, x: 5, y: 1 },
+    { id: 4, seats: 6, type: "vip", occupied: false, x: 1, y: 3 },
+    { id: 5, seats: 4, type: "hookah", occupied: false, x: 3, y: 3 },
+    { id: 6, seats: 2, type: "regular", occupied: false, x: 5, y: 3 },
+    { id: 7, seats: 8, type: "vip", occupied: false, x: 2, y: 5 },
+    { id: 8, seats: 4, type: "hookah", occupied: true, x: 4, y: 5 },
   ];
 
   const getTableColor = (table: Table) => {
@@ -67,35 +67,64 @@ const TableSchemeSection = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-8">
-                <div className="relative bg-slate-700 rounded-lg h-96 border-2 border-slate-600">
+                <div className="relative bg-slate-700 rounded-lg p-6">
                   {/* Entrance */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-b text-sm">
-                    🚪 Вход
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-orange-500 text-white px-6 py-2 rounded-lg text-sm font-medium">
+                      🚪 Главный вход
+                    </div>
+                  </div>
+
+                  {/* Tables Grid */}
+                  <div className="grid grid-cols-6 gap-4 mb-6 min-h-80">
+                    {Array.from({ length: 36 }, (_, index) => {
+                      const col = (index % 6) + 1;
+                      const row = Math.floor(index / 6) + 1;
+                      const table = tables.find(
+                        (t) => t.x === col && t.y === row,
+                      );
+
+                      if (!table) {
+                        return (
+                          <div
+                            key={index}
+                            className="aspect-square flex items-center justify-center"
+                          >
+                            <div className="w-8 h-8 border-2 border-dashed border-slate-600 rounded opacity-30"></div>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div
+                          key={table.id}
+                          className={`aspect-square ${getTableColor(table)} 
+                            ${!table.occupied ? "cursor-pointer hover:scale-105 hover:shadow-lg" : "cursor-not-allowed opacity-70"}
+                            transition-all duration-200 rounded-lg flex flex-col items-center justify-center text-white text-xs font-bold shadow-md`}
+                          onClick={() =>
+                            !table.occupied && setSelectedTable(table.id)
+                          }
+                        >
+                          <Icon
+                            name={getTableIcon(table.type)}
+                            size={16}
+                            className="mb-1"
+                          />
+                          <div className="text-center">
+                            <div>#{table.id}</div>
+                            <div className="text-xs opacity-80">
+                              {table.seats}м
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* Bar */}
-                  <div className="absolute bottom-4 left-4 right-4 h-8 bg-amber-700 rounded flex items-center justify-center text-white text-sm">
-                    🍸 Бар
+                  <div className="bg-amber-700 rounded-lg p-3 text-center text-white font-medium">
+                    🍸 Барная стойка
                   </div>
-
-                  {/* Tables */}
-                  {tables.map((table) => (
-                    <div
-                      key={table.id}
-                      className={`absolute w-12 h-12 rounded-full ${getTableColor(table)} 
-                        ${!table.occupied ? "cursor-pointer hover:scale-110" : "cursor-not-allowed"}
-                        transition-all duration-200 flex items-center justify-center text-white text-xs font-bold`}
-                      style={{ left: `${table.x}%`, top: `${table.y}%` }}
-                      onClick={() =>
-                        !table.occupied && setSelectedTable(table.id)
-                      }
-                    >
-                      <div className="text-center">
-                        <Icon name={getTableIcon(table.type)} size={16} />
-                        <div>{table.id}</div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </CardContent>
             </Card>
