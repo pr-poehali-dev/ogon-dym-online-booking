@@ -1,101 +1,45 @@
-import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const navItems = [
+    { path: "/", label: "Главная" },
+    { path: "/about", label: "О нас" },
+    { path: "/menu", label: "Меню" },
+    { path: "/booking", label: "Бронирование" },
+    { path: "/tables", label: "Схема столов" },
+    { path: "/events", label: "События" },
+    { path: "/contact", label: "Контакты" },
+  ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-slate-900/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-purple-400 bg-clip-text text-transparent">
-              Огонь и Дым
-            </span>
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center py-4">
+          <Link to="/" className="text-2xl font-bold text-primary">
+            Ресторан
+          </Link>
+
+          <div className="hidden md:flex space-x-4">
+            {navItems.map((item) => (
+              <Link key={item.path} to={item.path}>
+                <Button
+                  variant={
+                    location.pathname === item.path ? "default" : "ghost"
+                  }
+                  className="text-sm"
+                >
+                  {item.label}
+                </Button>
+              </Link>
+            ))}
           </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <Button
-                variant="ghost"
-                className="text-white hover:text-orange-400 hover:bg-white/10"
-                onClick={() => scrollToSection("hero")}
-              >
-                Главная
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-white hover:text-orange-400 hover:bg-white/10"
-                onClick={() => scrollToSection("about")}
-              >
-                О нас
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-white hover:text-orange-400 hover:bg-white/10"
-                onClick={() => scrollToSection("menu")}
-              >
-                Меню
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-white hover:text-orange-400 hover:bg-white/10"
-                onClick={() => scrollToSection("tables")}
-              >
-                Столики
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-white hover:text-orange-400 hover:bg-white/10"
-                onClick={() => scrollToSection("events")}
-              >
-                События
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-white hover:text-orange-400 hover:bg-white/10"
-                onClick={() => scrollToSection("contacts")}
-              >
-                Контакты
-              </Button>
-              <Button
-                className="bg-orange-500 hover:bg-orange-600 text-white"
-                onClick={() => scrollToSection("booking")}
-              >
-                Бронировать
-              </Button>
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button
-              variant="ghost"
-              className="text-white"
-              onClick={() => scrollToSection("booking")}
-            >
-              🔥 Бронь
+            <Button variant="ghost" size="sm">
+              Меню
             </Button>
           </div>
         </div>
