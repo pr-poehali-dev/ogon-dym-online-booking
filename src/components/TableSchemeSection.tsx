@@ -113,11 +113,9 @@ const TableSchemeSection = () => {
                             !table.occupied && setSelectedTable(table.id)
                           }
                         >
-                          <Icon
-                            name={getTableIcon(table.type)}
-                            size={16}
-                            className="mb-1"
-                          />
+                          <span className="text-lg">
+                            {getTableTypeIcon(table.type)}
+                          </span>
                           <div className="text-center">
                             <div>#{table.id}</div>
                             <div className="text-xs opacity-80">
