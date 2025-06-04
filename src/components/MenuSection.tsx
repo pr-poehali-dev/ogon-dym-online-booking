@@ -47,6 +47,54 @@ const MenuSection = () => {
     { name: "Смузи ягодный", price: "450 ₽" },
   ];
 
+  const snacks = [
+    {
+      name: "Крылышки BBQ",
+      description: "8 шт., соус барбекю",
+      price: "650 ₽",
+    },
+    {
+      name: "Крылышки острые",
+      description: "8 шт., острый соус",
+      price: "650 ₽",
+    },
+    {
+      name: "Наггетсы куриные",
+      description: "10 шт., соус на выбор",
+      price: "450 ₽",
+    },
+    {
+      name: "Картофель фри",
+      description: "Хрустящий, с солью",
+      price: "350 ₽",
+    },
+    {
+      name: "Сырная тарелка",
+      description: "Ассорти из 4 видов сыра",
+      price: "750 ₽",
+    },
+    {
+      name: "Мясная тарелка",
+      description: "Колбасы, ветчина, пастрами",
+      price: "850 ₽",
+    },
+    {
+      name: "Пицца Маргарита",
+      description: "Томаты, моцарелла, базилик",
+      price: "600 ₽",
+    },
+    {
+      name: "Пицца Пепперони",
+      description: "Пепперони, моцарелла",
+      price: "700 ₽",
+    },
+    {
+      name: "Пицца 4 сыра",
+      description: "Моцарелла, пармезан, горгонзола, фета",
+      price: "750 ₽",
+    },
+  ];
+
   return (
     <section
       id="menu"
@@ -90,6 +138,33 @@ const MenuSection = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+
+            {/* Snacks Menu */}
+            <div className="mt-12">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+                🍗 Закуски
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {snacks.map((snack, index) => (
+                  <Card
+                    key={index}
+                    className="hover:shadow-lg transition-shadow bg-slate-900 border-slate-700"
+                  >
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg text-white flex justify-between items-start">
+                        <span>{snack.name}</span>
+                        <span className="text-orange-400 font-bold">
+                          {snack.price}
+                        </span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-slate-300">{snack.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
 
