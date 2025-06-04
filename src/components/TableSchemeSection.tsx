@@ -16,14 +16,14 @@ const TableSchemeSection = () => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
 
   const tables: Table[] = [
-    { id: 1, seats: 2, type: "regular", occupied: false, x: 1, y: 1 },
-    { id: 2, seats: 4, type: "hookah", occupied: true, x: 3, y: 1 },
-    { id: 3, seats: 2, type: "regular", occupied: false, x: 5, y: 1 },
+    { id: 1, seats: 2, type: "vip", occupied: false, x: 1, y: 1 },
+    { id: 2, seats: 4, type: "vip", occupied: true, x: 3, y: 1 },
+    { id: 3, seats: 2, type: "vip", occupied: false, x: 5, y: 1 },
     { id: 4, seats: 6, type: "vip", occupied: false, x: 1, y: 3 },
     { id: 5, seats: 4, type: "hookah", occupied: false, x: 3, y: 3 },
     { id: 6, seats: 2, type: "regular", occupied: false, x: 5, y: 3 },
-    { id: 7, seats: 8, type: "vip", occupied: false, x: 2, y: 5 },
-    { id: 8, seats: 4, type: "hookah", occupied: true, x: 4, y: 5 },
+    { id: 7, seats: 8, type: "hookah", occupied: false, x: 2, y: 5 },
+    { id: 8, seats: 4, type: "regular", occupied: true, x: 4, y: 5 },
   ];
 
   const getTableColor = (table: Table) => {
@@ -75,13 +75,6 @@ const TableSchemeSection = () => {
                     </div>
                   </div>
 
-                  {/* Stage */}
-                  <div className="flex justify-center mb-4">
-                    <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg text-sm font-bold shadow-lg">
-                      🎤 Сцена
-                    </div>
-                  </div>
-
                   {/* Tables Grid */}
                   <div className="grid grid-cols-6 gap-4 mb-6 min-h-80">
                     {Array.from({ length: 36 }, (_, index) => {
@@ -126,6 +119,13 @@ const TableSchemeSection = () => {
                         </div>
                       );
                     })}
+                  </div>
+
+                  {/* Stage moved to the right side */}
+                  <div className="flex justify-end mb-4">
+                    <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg text-sm font-bold shadow-lg">
+                      🎤 Сцена
+                    </div>
                   </div>
 
                   {/* Bar */}
