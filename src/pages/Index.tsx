@@ -1,6 +1,8 @@
 import Hero from "@/components/Hero";
 import BookingSection from "@/components/BookingSection";
 import MenuSection from "@/components/MenuSection";
+import TableSchemeSection from "@/components/TableSchemeSection";
+import EventsSection from "@/components/EventsSection";
 import ContactSection from "@/components/ContactSection";
 
 const Index = () => {
@@ -9,6 +11,8 @@ const Index = () => {
       <Hero />
       <BookingSection />
       <MenuSection />
+      <TableSchemeSection />
+      <EventsSection />
       <ContactSection />
     </div>
   );
