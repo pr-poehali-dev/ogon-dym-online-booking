@@ -24,7 +24,7 @@ const EventsSection = () => {
       description: "Атмосферный джазовый вечер с известными музыкантами города",
       price: "от 2000₽",
       image:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+        "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400",
     },
     {
       id: 2,
@@ -59,7 +59,7 @@ const EventsSection = () => {
         "Встреча с легендарным Вовочкой - анекдоты и весёлые истории",
       price: "от 2500₽",
       image:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+        "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400",
     },
   ];
 

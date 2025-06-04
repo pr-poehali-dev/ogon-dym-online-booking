@@ -8,7 +8,8 @@ import Icon from "@/components/ui/icon";
 
 const BookingSection = () => {
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const [selectedTime, setSelectedTime] = useState<string>("");
+  const [selectedStartTime, setSelectedStartTime] = useState<string>("");
+  const [selectedEndTime, setSelectedEndTime] = useState<string>("");
   const [guests, setGuests] = useState<string>("2");
   const [phone, setPhone] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -33,9 +34,9 @@ const BookingSection = () => {
   ];
 
   const handleBooking = () => {
-    if (selectedDate && selectedTime && name && phone) {
+    if (selectedDate && selectedStartTime && selectedEndTime && name && phone) {
       alert(
-        `Спасибо, ${name}! Ваш столик на ${guests} человек забронирован на ${selectedDate.toLocaleDateString()} в ${selectedTime}. Мы свяжемся с вами по номеру ${phone}`,
+        `Спасибо, ${name}! Ваш столик на ${guests} человек забронирован на ${selectedDate.toLocaleDateString()} с ${selectedStartTime} до ${selectedEndTime}. Мы свяжемся с вами по номеру ${phone}`,
       );
     } else {
       alert("Пожалуйста, заполните все поля");
@@ -150,17 +151,44 @@ const BookingSection = () => {
 
                         <div>
                           <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Время
+                            Время начала
+                          </label>
+                          <div className="grid grid-cols-3 gap-2 mb-4">
+                            {timeSlots.map((time) => (
+                              <Button
+                                key={time}
+                                variant={
+                                  selectedStartTime === time
+                                    ? "default"
+                                    : "outline"
+                                }
+                                className="text-sm"
+                                onClick={() => setSelectedStartTime(time)}
+                              >
+                                {time}
+                              </Button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Время окончания
                           </label>
                           <div className="grid grid-cols-3 gap-2">
                             {timeSlots.map((time) => (
                               <Button
                                 key={time}
                                 variant={
-                                  selectedTime === time ? "default" : "outline"
+                                  selectedEndTime === time
+                                    ? "default"
+                                    : "outline"
                                 }
                                 className="text-sm"
-                                onClick={() => setSelectedTime(time)}
+                                onClick={() => setSelectedEndTime(time)}
+                                disabled={
+                                  selectedStartTime && time <= selectedStartTime
+                                }
                               >
                                 {time}
                               </Button>
