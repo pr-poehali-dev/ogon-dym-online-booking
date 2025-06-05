@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
-import Navigation from "@/components/Navigation";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section
       id="hero"
@@ -27,11 +28,7 @@ const Hero = () => {
           <Button
             size="lg"
             className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg"
-            onClick={() =>
-              document
-                .getElementById("booking")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => navigate("/booking")}
           >
             🔥 Забронировать столик
           </Button>
@@ -39,11 +36,7 @@ const Hero = () => {
             variant="outline"
             size="lg"
             className="border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-3 text-lg"
-            onClick={() =>
-              document
-                .getElementById("menu")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => navigate("/menu")}
           >
             💨 Посмотреть меню
           </Button>

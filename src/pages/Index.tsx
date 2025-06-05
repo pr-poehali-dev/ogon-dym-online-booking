@@ -1,9 +1,11 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -27,11 +29,6 @@ const Index = () => {
             <Link to="/booking">
               <Button variant="outline" className="w-full h-20 text-lg">
                 Бронирование
-              </Button>
-            </Link>
-            <Link to="/tables">
-              <Button variant="outline" className="w-full h-20 text-lg">
-                Схема столов
               </Button>
             </Link>
             <Link to="/events">

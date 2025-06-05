@@ -9,6 +9,7 @@ export const tables: Table[] = [
   { id: 6, seats: 2, type: "regular", occupied: false, x: 5, y: 3 },
   { id: 7, seats: 8, type: "hookah", occupied: false, x: 2, y: 5 },
   { id: 8, seats: 4, type: "regular", occupied: true, x: 4, y: 5 },
+  { id: 9, seats: 10, type: "bar", occupied: false, x: 1, y: 6 },
 ];
 
 export const menuItems: MenuItem[] = [

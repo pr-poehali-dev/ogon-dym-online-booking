@@ -9,7 +9,6 @@ const Navigation = () => {
     { path: "/about", label: "О нас" },
     { path: "/menu", label: "Меню" },
     { path: "/booking", label: "Бронирование" },
-    { path: "/tables", label: "Схема столов" },
     { path: "/events", label: "События" },
     { path: "/contact", label: "Контакты" },
   ];
