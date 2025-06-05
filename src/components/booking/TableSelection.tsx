@@ -77,6 +77,13 @@ const TableSelection = ({
             </div>
           </div>
 
+          {/* Location indicators */}
+          <div className="space-y-2">
+            <div className="bg-orange-500 text-white px-3 py-1 rounded text-xs text-center">
+              🚪 Вход
+            </div>
+          </div>
+
           {/* Tables Grid */}
           <div
             className={`grid gap-2 mb-4 ${isMobile ? "grid-cols-4" : "grid-cols-6"}`}
@@ -119,11 +126,8 @@ const TableSelection = ({
             })}
           </div>
 
-          {/* Location indicators */}
-          <div className="space-y-2">
-            <div className="bg-orange-500 text-white px-3 py-1 rounded text-xs text-center">
-              🚪 Вход
-            </div>
+          {/* Bar indicator - moved to bottom */}
+          <div className="space-y-2 mb-4">
             <div className="bg-amber-600 text-white px-3 py-1 rounded text-xs text-center">
               🍸 Бар
             </div>
