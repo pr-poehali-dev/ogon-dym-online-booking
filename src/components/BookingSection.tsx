@@ -173,19 +173,19 @@ const BookingSection = () => {
                         })
                       }
                     />
-
-                    <Button
-                      className="w-full mt-6 bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white py-3 text-lg"
-                      onClick={handleBooking}
-                      disabled={!bookingData.selectedTable}
-                    >
-                      🔥 Забронировать столик{" "}
-                      {bookingData.selectedTable
-                        ? `#${bookingData.selectedTable}`
-                        : ""}
-                    </Button>
                   </div>
                 </div>
+
+                <Button
+                  className="w-full mt-8 bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white py-3 text-lg"
+                  onClick={handleBooking}
+                  disabled={!bookingData.selectedTable}
+                >
+                  🔥 Забронировать столик{" "}
+                  {bookingData.selectedTable
+                    ? `#${bookingData.selectedTable}`
+                    : ""}
+                </Button>
               </TabsContent>
 
               <TabsContent value="cancel">
