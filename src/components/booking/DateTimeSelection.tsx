@@ -50,35 +50,10 @@ const DateTimeSelection = ({
   const isMobile = useIsMobile();
 
   const handlePhoneChange = (value: string) => {
-    // Убираем все кроме цифр
-    const digits = value.replace(/\D/g, "");
-
-    // Форматируем номер
-    if (digits.length === 0) {
-      onPhoneChange("+7 ");
-      return;
+    if (!value.startsWith("+7")) {
+      value = "+7 " + value.replace(/^\+?7?\s*/, "");
     }
-
-    let formattedDigits = digits;
-
-    // Если номер начинается с 8, заменяем на 7
-    if (formattedDigits.startsWith("8")) {
-      formattedDigits = "7" + formattedDigits.slice(1);
-    }
-
-    // Если номер не начинается с 7, добавляем 7 в начало
-    if (!formattedDigits.startsWith("7")) {
-      formattedDigits = "7" + formattedDigits;
-    }
-
-    // Ограничиваем длину (7 + 10 цифр максимум)
-    if (formattedDigits.length > 11) {
-      formattedDigits = formattedDigits.slice(0, 11);
-    }
-
-    // Добавляем +7 и пробел
-    const result = "+7 " + formattedDigits.slice(1);
-    onPhoneChange(result);
+    onPhoneChange(value);
   };
 
   const handlePhoneFocus = (e: React.FocusEvent<HTMLInputElement>) => {
