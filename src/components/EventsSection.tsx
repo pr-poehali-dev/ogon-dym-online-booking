@@ -1,6 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
+import { useState } from "react";
 
 interface Event {
   id: number;
@@ -14,6 +23,13 @@ interface Event {
 }
 
 const EventsSection = () => {
+  const [bookingData, setBookingData] = useState({
+    eventId: null as number | null,
+    name: "",
+    phone: "",
+    guests: "2",
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const events: Event[] = [
     {
       id: 1,
@@ -153,11 +169,122 @@ const EventsSection = () => {
               <CardContent>
                 <p className="text-slate-300 mb-6">{event.description}</p>
                 <div className="flex gap-3">
-                  <Button
-                    className={`flex-1 bg-gradient-to-r ${getEventColor(event.type)} hover:opacity-90`}
-                  >
-                    Забронировать место
-                  </Button>
+                  <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button
+                        className={`flex-1 bg-gradient-to-r ${getEventColor(event.type)} hover:opacity-90`}
+                        onClick={() =>
+                          setBookingData({ ...bookingData, eventId: event.id })
+                        }
+                      >
+                        Забронировать место
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-slate-800 border-slate-700 text-white">
+                      <DialogHeader>
+                        <DialogTitle className="text-xl">
+                          Бронирование на событие
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        {(() => {
+                          const currentEvent = events.find(
+                            (e) => e.id === bookingData.eventId,
+                          );
+                          return currentEvent ? (
+                            <div className="bg-slate-700 p-4 rounded-lg mb-4">
+                              <h3 className="font-bold text-orange-400">
+                                {currentEvent.title}
+                              </h3>
+                              <p className="text-sm text-slate-300">
+                                {currentEvent.date} в {currentEvent.time}
+                              </p>
+                              <p className="text-sm text-slate-300">
+                                {currentEvent.price}
+                              </p>
+                            </div>
+                          ) : null;
+                        })()}
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
+                            Ваше имя
+                          </label>
+                          <Input
+                            placeholder="Введите ваше имя"
+                            value={bookingData.name}
+                            onChange={(e) =>
+                              setBookingData({
+                                ...bookingData,
+                                name: e.target.value,
+                              })
+                            }
+                            className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
+                            Телефон
+                          </label>
+                          <Input
+                            placeholder="+7 (xxx) xxx-xx-xx"
+                            value={bookingData.phone}
+                            onChange={(e) =>
+                              setBookingData({
+                                ...bookingData,
+                                phone: e.target.value,
+                              })
+                            }
+                            className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-2">
+                            Количество мест
+                          </label>
+                          <select
+                            className="w-full p-2 border border-slate-600 rounded-md bg-slate-700 text-white"
+                            value={bookingData.guests}
+                            onChange={(e) =>
+                              setBookingData({
+                                ...bookingData,
+                                guests: e.target.value,
+                              })
+                            }
+                          >
+                            {[1, 2, 3, 4, 5, 6].map((num) => (
+                              <option key={num} value={num}>
+                                {num} {num === 1 ? "место" : "места"}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <Button
+                          className="w-full bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90"
+                          onClick={() => {
+                            if (bookingData.name && bookingData.phone) {
+                              const event = events.find(
+                                (e) => e.id === bookingData.eventId,
+                              );
+                              alert(
+                                `✅ Место на событие забронировано!\n\nСобытие: ${event?.title}\nДата: ${event?.date} в ${event?.time}\nИмя: ${bookingData.name}\nТелефон: ${bookingData.phone}\nМест: ${bookingData.guests}\nЦена: ${event?.price}\n\nМы свяжемся с вами для подтверждения!`,
+                              );
+                              setIsDialogOpen(false);
+                              setBookingData({
+                                eventId: null,
+                                name: "",
+                                phone: "",
+                                guests: "2",
+                              });
+                            } else {
+                              alert("Пожалуйста, заполните все поля");
+                            }
+                          }}
+                        >
+                          🎭 Забронировать место на событие
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                   <Button
                     variant="outline"
                     className="border-slate-600 text-slate-300 hover:bg-slate-700"

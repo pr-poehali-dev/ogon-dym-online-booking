@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import Icon from "@/components/ui/icon";
 
 interface Table {
@@ -14,6 +22,14 @@ interface Table {
 
 const TableSchemeSection = () => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
+  const [bookingData, setBookingData] = useState({
+    date: "",
+    time: "",
+    name: "",
+    phone: "",
+    guests: "2",
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const tables: Table[] = [
     { id: 1, seats: 2, type: "vip", occupied: false, x: 1, y: 1 },
@@ -196,16 +212,150 @@ const TableSchemeSection = () => {
                               ? "Кальянная"
                               : "Обычный"}
                         </p>
-                        <Button
-                          className="w-full mt-4 bg-white text-orange-600 hover:bg-slate-100"
-                          onClick={() =>
-                            alert(
-                              `Столик #${selectedTable} выбран для бронирования!`,
-                            )
-                          }
+                        <Dialog
+                          open={isDialogOpen}
+                          onOpenChange={setIsDialogOpen}
                         >
-                          Забронировать этот столик
-                        </Button>
+                          <DialogTrigger asChild>
+                            <Button className="w-full mt-4 bg-white text-orange-600 hover:bg-slate-100">
+                              Забронировать этот столик
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="bg-slate-800 border-slate-700 text-white">
+                            <DialogHeader>
+                              <DialogTitle className="text-xl">
+                                Бронирование столика #{selectedTable}
+                              </DialogTitle>
+                            </DialogHeader>
+                            <div className="space-y-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                  Дата посещения
+                                </label>
+                                <Input
+                                  type="date"
+                                  value={bookingData.date}
+                                  onChange={(e) =>
+                                    setBookingData({
+                                      ...bookingData,
+                                      date: e.target.value,
+                                    })
+                                  }
+                                  className="bg-slate-700 border-slate-600 text-white"
+                                  min={new Date().toISOString().split("T")[0]}
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                  Время
+                                </label>
+                                <select
+                                  className="w-full p-2 border border-slate-600 rounded-md bg-slate-700 text-white"
+                                  value={bookingData.time}
+                                  onChange={(e) =>
+                                    setBookingData({
+                                      ...bookingData,
+                                      time: e.target.value,
+                                    })
+                                  }
+                                >
+                                  <option value="">Выберите время</option>
+                                  <option value="18:00">18:00</option>
+                                  <option value="19:00">19:00</option>
+                                  <option value="20:00">20:00</option>
+                                  <option value="21:00">21:00</option>
+                                  <option value="22:00">22:00</option>
+                                  <option value="23:00">23:00</option>
+                                </select>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                                    Ваше имя
+                                  </label>
+                                  <Input
+                                    placeholder="Введите имя"
+                                    value={bookingData.name}
+                                    onChange={(e) =>
+                                      setBookingData({
+                                        ...bookingData,
+                                        name: e.target.value,
+                                      })
+                                    }
+                                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                                    Телефон
+                                  </label>
+                                  <Input
+                                    placeholder="+7 (xxx) xxx-xx-xx"
+                                    value={bookingData.phone}
+                                    onChange={(e) =>
+                                      setBookingData({
+                                        ...bookingData,
+                                        phone: e.target.value,
+                                      })
+                                    }
+                                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
+                                  />
+                                </div>
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                  Количество гостей
+                                </label>
+                                <select
+                                  className="w-full p-2 border border-slate-600 rounded-md bg-slate-700 text-white"
+                                  value={bookingData.guests}
+                                  onChange={(e) =>
+                                    setBookingData({
+                                      ...bookingData,
+                                      guests: e.target.value,
+                                    })
+                                  }
+                                >
+                                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                                    <option key={num} value={num}>
+                                      {num} {num === 1 ? "гость" : "гостя"}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                              <Button
+                                className="w-full bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90"
+                                onClick={() => {
+                                  if (
+                                    bookingData.date &&
+                                    bookingData.time &&
+                                    bookingData.name &&
+                                    bookingData.phone
+                                  ) {
+                                    const table = tables.find(
+                                      (t) => t.id === selectedTable,
+                                    );
+                                    alert(
+                                      `✅ Столик #${selectedTable} забронирован!\n\nДата: ${bookingData.date}\nВремя: ${bookingData.time}\nИмя: ${bookingData.name}\nТелефон: ${bookingData.phone}\nГостей: ${bookingData.guests}\nТип столика: ${table?.type === "vip" ? "VIP" : table?.type === "hookah" ? "Кальянная" : "Обычный"}\n\nМы свяжемся с вами для подтверждения!`,
+                                    );
+                                    setIsDialogOpen(false);
+                                    setBookingData({
+                                      date: "",
+                                      time: "",
+                                      name: "",
+                                      phone: "",
+                                      guests: "2",
+                                    });
+                                  } else {
+                                    alert("Пожалуйста, заполните все поля");
+                                  }
+                                }}
+                              >
+                                🔥 Подтвердить бронирование
+                              </Button>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     ) : null;
                   })()}
