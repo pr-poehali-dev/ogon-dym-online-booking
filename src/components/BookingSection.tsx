@@ -189,7 +189,18 @@ const BookingSection = () => {
                           <Input
                             placeholder="+7 (xxx) xxx-xx-xx"
                             value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={(e) => {
+                              let value = e.target.value;
+                              if (!value.startsWith("+7")) {
+                                value = "+7 " + value.replace(/^\+?7?\s*/, "");
+                              }
+                              setPhone(value);
+                            }}
+                            onFocus={(e) => {
+                              if (!e.target.value) {
+                                setPhone("+7 ");
+                              }
+                            }}
                             className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                           />
                         </div>
@@ -393,7 +404,18 @@ const BookingSection = () => {
                       <Input
                         placeholder="+7 (xxx) xxx-xx-xx"
                         value={cancelPhone}
-                        onChange={(e) => setCancelPhone(e.target.value)}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (!value.startsWith("+7")) {
+                            value = "+7 " + value.replace(/^\+?7?\s*/, "");
+                          }
+                          setCancelPhone(value);
+                        }}
+                        onFocus={(e) => {
+                          if (!e.target.value) {
+                            setCancelPhone("+7 ");
+                          }
+                        }}
                         className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                       />
                     </div>

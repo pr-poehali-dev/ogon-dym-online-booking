@@ -292,12 +292,26 @@ const TableSchemeSection = () => {
                                   <Input
                                     placeholder="+7 (xxx) xxx-xx-xx"
                                     value={bookingData.phone}
-                                    onChange={(e) =>
+                                    onChange={(e) => {
+                                      let value = e.target.value;
+                                      if (!value.startsWith("+7")) {
+                                        value =
+                                          "+7 " +
+                                          value.replace(/^\+?7?\s*/, "");
+                                      }
                                       setBookingData({
                                         ...bookingData,
-                                        phone: e.target.value,
-                                      })
-                                    }
+                                        phone: value,
+                                      });
+                                    }}
+                                    onFocus={(e) => {
+                                      if (!e.target.value) {
+                                        setBookingData({
+                                          ...bookingData,
+                                          phone: "+7 ",
+                                        });
+                                      }
+                                    }}
                                     className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
                                   />
                                 </div>
