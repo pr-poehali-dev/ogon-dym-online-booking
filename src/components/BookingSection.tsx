@@ -5,6 +5,16 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Icon from "@/components/ui/icon";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+interface Table {
+  id: number;
+  seats: number;
+  type: "regular" | "vip" | "hookah";
+  occupied: boolean;
+  x: number;
+  y: number;
+}
 
 const BookingSection = () => {
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -13,6 +23,8 @@ const BookingSection = () => {
   const [guests, setGuests] = useState<string>("2");
   const [phone, setPhone] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [selectedTable, setSelectedTable] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   // Pre-order state
   const [selectedItems, setSelectedItems] = useState<{ [key: string]: number }>(
@@ -67,6 +79,53 @@ const BookingSection = () => {
     "23:30",
   ];
 
+  // Добавляем данные о столиках
+  const tables: Table[] = [
+    { id: 1, seats: 2, type: "vip", occupied: false, x: 1, y: 1 },
+    { id: 2, seats: 4, type: "vip", occupied: true, x: 3, y: 1 },
+    { id: 3, seats: 2, type: "vip", occupied: false, x: 5, y: 1 },
+    { id: 4, seats: 6, type: "vip", occupied: false, x: 1, y: 3 },
+    { id: 5, seats: 4, type: "hookah", occupied: false, x: 3, y: 3 },
+    { id: 6, seats: 2, type: "regular", occupied: false, x: 5, y: 3 },
+    { id: 7, seats: 8, type: "hookah", occupied: false, x: 2, y: 5 },
+    { id: 8, seats: 4, type: "regular", occupied: true, x: 4, y: 5 },
+  ];
+
+  const getTableColor = (table: Table) => {
+    if (table.occupied) return "bg-red-500 opacity-50 cursor-not-allowed";
+    if (selectedTable === table.id) return "bg-orange-500";
+    switch (table.type) {
+      case "vip":
+        return "bg-purple-500 hover:bg-purple-400";
+      case "hookah":
+        return "bg-blue-500 hover:bg-blue-400";
+      default:
+        return "bg-slate-500 hover:bg-slate-400";
+    }
+  };
+
+  const getTableTypeIcon = (type: string) => {
+    switch (type) {
+      case "vip":
+        return "👑";
+      case "hookah":
+        return "💨";
+      default:
+        return "🪑";
+    }
+  };
+
+  const getTableTypeName = (type: string) => {
+    switch (type) {
+      case "vip":
+        return "VIP зона";
+      case "hookah":
+        return "Кальянная";
+      default:
+        return "Обычный";
+    }
+  };
+
   const handleItemChange = (itemId: string, quantity: number) => {
     setSelectedItems((prev) => ({
       ...prev,
@@ -82,7 +141,15 @@ const BookingSection = () => {
   };
 
   const handleBooking = () => {
-    if (selectedDate && selectedStartTime && selectedEndTime && name && phone) {
+    if (
+      selectedDate &&
+      selectedStartTime &&
+      selectedEndTime &&
+      name &&
+      phone &&
+      selectedTable
+    ) {
+      const table = tables.find((t) => t.id === selectedTable);
       const preorderSummary = Object.entries(selectedItems)
         .filter(([_, quantity]) => quantity > 0)
         .map(([itemId, quantity]) => {
@@ -92,11 +159,11 @@ const BookingSection = () => {
         .join(", ");
 
       const totalAmount = getTotalPreorderAmount();
-      const message = `Спасибо, ${name}! Ваш столик на ${guests} человек забронирован на ${selectedDate.toLocaleDateString()} с ${selectedStartTime} до ${selectedEndTime}.${preorderSummary ? `\n\nПредварительный заказ:\n${preorderSummary}\nСумма: ${totalAmount} ₽` : ""}\n\nМы свяжемся с вами по номеру ${phone}`;
+      const message = `Спасибо, ${name}! Столик #${selectedTable} (${getTableTypeName(table?.type || "regular")}, ${table?.seats} мест) забронирован на ${guests} человек на ${selectedDate.toLocaleDateString()} с ${selectedStartTime} до ${selectedEndTime}.${preorderSummary ? `\n\nПредварительный заказ:\n${preorderSummary}\nСумма: ${totalAmount} ₽` : ""}\n\nМы свяжемся с вами по номеру ${phone}`;
 
       alert(message);
     } else {
-      alert("Пожалуйста, заполните все поля");
+      alert("Пожалуйста, заполните все поля и выберите столик");
     }
   };
 
@@ -147,9 +214,139 @@ const BookingSection = () => {
               </TabsList>
 
               <TabsContent value="book">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div
+                  className={`grid gap-8 ${isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-2"}`}
+                >
+                  {/* Table selection - добавляем выбор столика */}
+                  <div className="space-y-4 order-1">
+                    <h3 className="text-lg font-semibold text-white">
+                      Выберите столик
+                    </h3>
+                    <Card className="bg-slate-700 border-slate-600">
+                      <CardContent className="p-4">
+                        {/* Legend */}
+                        <div
+                          className={`grid gap-2 mb-4 ${isMobile ? "grid-cols-2" : "grid-cols-4"}`}
+                        >
+                          <div className="flex items-center gap-2 text-xs">
+                            <div className="w-3 h-3 bg-purple-500 rounded"></div>
+                            <span className="text-slate-300">VIP</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            <div className="w-3 h-3 bg-blue-500 rounded"></div>
+                            <span className="text-slate-300">Кальян</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            <div className="w-3 h-3 bg-slate-500 rounded"></div>
+                            <span className="text-slate-300">Обычный</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            <div className="w-3 h-3 bg-red-500 rounded"></div>
+                            <span className="text-slate-300">Занят</span>
+                          </div>
+                        </div>
+
+                        {/* Tables Grid - компактная версия для мобильных */}
+                        <div
+                          className={`grid gap-2 mb-4 ${isMobile ? "grid-cols-4" : "grid-cols-6"}`}
+                        >
+                          {Array.from(
+                            { length: isMobile ? 16 : 36 },
+                            (_, index) => {
+                              const cols = isMobile ? 4 : 6;
+                              const col = (index % cols) + 1;
+                              const row = Math.floor(index / cols) + 1;
+                              const table = tables.find(
+                                (t) => t.x === col && t.y === row,
+                              );
+
+                              const uniqueKey = `cell-${col}-${row}`;
+
+                              if (!table) {
+                                return (
+                                  <div
+                                    key={uniqueKey}
+                                    className="aspect-square flex items-center justify-center"
+                                  >
+                                    <div className="w-6 h-6 border border-dashed border-slate-600 rounded opacity-20"></div>
+                                  </div>
+                                );
+                              }
+
+                              return (
+                                <button
+                                  key={`table-${table.id}`}
+                                  className={`aspect-square ${getTableColor(table)} 
+                                  ${!table.occupied ? "cursor-pointer hover:scale-105" : ""}
+                                  transition-all duration-200 rounded flex flex-col items-center justify-center text-white text-xs font-bold shadow-md`}
+                                  onClick={() =>
+                                    !table.occupied &&
+                                    setSelectedTable(table.id)
+                                  }
+                                  disabled={table.occupied}
+                                >
+                                  <span
+                                    className={isMobile ? "text-sm" : "text-lg"}
+                                  >
+                                    {getTableTypeIcon(table.type)}
+                                  </span>
+                                  <div className="text-center">
+                                    <div
+                                      className={
+                                        isMobile ? "text-xs" : "text-xs"
+                                      }
+                                    >
+                                      #{table.id}
+                                    </div>
+                                    <div className="text-xs opacity-80">
+                                      {table.seats}м
+                                    </div>
+                                  </div>
+                                </button>
+                              );
+                            },
+                          )}
+                        </div>
+
+                        {/* Entrance and bar indicators */}
+                        <div className="space-y-2">
+                          <div className="bg-orange-500 text-white px-3 py-1 rounded text-xs text-center">
+                            🚪 Вход
+                          </div>
+                          <div className="bg-amber-600 text-white px-3 py-1 rounded text-xs text-center">
+                            🍸 Бар
+                          </div>
+                        </div>
+
+                        {/* Selected table info */}
+                        {selectedTable && (
+                          <div className="mt-4 p-3 bg-orange-500/20 border border-orange-500 rounded-lg">
+                            {(() => {
+                              const table = tables.find(
+                                (t) => t.id === selectedTable,
+                              );
+                              return table ? (
+                                <div className="text-white text-sm">
+                                  <div className="font-medium mb-1">
+                                    Столик #{selectedTable}
+                                  </div>
+                                  <div className="text-orange-300">
+                                    💺 {table.seats} мест • 🏷️{" "}
+                                    {getTableTypeName(table.type)}
+                                  </div>
+                                </div>
+                              ) : null;
+                            })()}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+
                   {/* Calendar */}
-                  <div className="space-y-4">
+                  <div
+                    className={`space-y-4 ${isMobile ? "order-3" : "order-2"}`}
+                  >
                     <h3 className="text-lg font-semibold text-white">
                       Выберите дату
                     </h3>
@@ -158,12 +355,14 @@ const BookingSection = () => {
                       selected={selectedDate}
                       onSelect={setSelectedDate}
                       disabled={(date) => date < new Date()}
-                      className="rounded-md border border-slate-600 bg-slate-700 text-white"
+                      className="rounded-md border border-slate-600 bg-slate-700 text-white mx-auto"
                     />
                   </div>
 
                   {/* Booking form */}
-                  <div className="space-y-6">
+                  <div
+                    className={`space-y-6 ${isMobile ? "order-2 lg:col-span-2" : "order-3 lg:col-span-2"}`}
+                  >
                     <div>
                       <h3 className="text-lg font-semibold text-white mb-4">
                         Детали бронирования
@@ -378,8 +577,10 @@ const BookingSection = () => {
                     <Button
                       className="w-full bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white py-3 text-lg"
                       onClick={handleBooking}
+                      disabled={!selectedTable}
                     >
-                      🔥 Забронировать столик
+                      🔥 Забронировать столик{" "}
+                      {selectedTable ? `#${selectedTable}` : ""}
                     </Button>
                   </div>
                 </div>
