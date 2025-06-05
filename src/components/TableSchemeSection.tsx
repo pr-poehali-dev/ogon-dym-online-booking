@@ -92,10 +92,12 @@ const TableSchemeSection = () => {
                         (t) => t.x === col && t.y === row,
                       );
 
+                      const uniqueKey = `cell-${col}-${row}`;
+
                       if (!table) {
                         return (
                           <div
-                            key={index}
+                            key={uniqueKey}
                             className="aspect-square flex items-center justify-center"
                           >
                             <div className="w-8 h-8 border-2 border-dashed border-slate-600 rounded opacity-30"></div>
@@ -105,7 +107,7 @@ const TableSchemeSection = () => {
 
                       return (
                         <div
-                          key={table.id}
+                          key={`table-${table.id}`}
                           className={`aspect-square ${getTableColor(table)} 
                             ${!table.occupied ? "cursor-pointer hover:scale-105 hover:shadow-lg" : "cursor-not-allowed opacity-70"}
                             transition-all duration-200 rounded-lg flex flex-col items-center justify-center text-white text-xs font-bold shadow-md`}
