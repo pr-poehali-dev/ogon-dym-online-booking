@@ -120,12 +120,12 @@ const TableSelection = ({
           </div>
 
           {/* Location indicators */}
-          <div className="space-y-2">
-            <div className="bg-orange-500 text-white px-3 py-1 rounded text-xs text-center">
-              🚪 Вход
-            </div>
-            <div className="bg-amber-600 text-white px-3 py-1 rounded text-xs text-center">
+          <div className="flex justify-between space-x-2">
+            <div className="bg-amber-600 text-white px-3 py-1 rounded text-xs text-center flex-1">
               🍸 Бар
+            </div>
+            <div className="bg-orange-500 text-white px-3 py-1 rounded text-xs text-center flex-1">
+              🚪 Вход
             </div>
           </div>
 

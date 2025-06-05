@@ -101,99 +101,76 @@ const BookingSection = () => {
           <h2 className="text-4xl font-bold text-white mb-4">
             Забронировать столик
           </h2>
-          <p className="text-xl text-slate-300">
-            Выберите удобное время для незабываемого вечера
+          <p className="text-slate-300">
+            Выберите удобное время и столик для незабываемого вечера
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto shadow-xl bg-slate-800 border-slate-700">
-          <CardHeader className="bg-gradient-to-r from-orange-500 to-purple-600 text-white">
-            <CardTitle className="text-2xl text-center">
-              Онлайн бронирование
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-8">
-            <Tabs defaultValue="book" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="book" className="flex items-center gap-2">
-                  <Icon name="Calendar" size={16} />
-                  Забронировать
-                </TabsTrigger>
-                <TabsTrigger value="cancel" className="flex items-center gap-2">
-                  <Icon name="X" size={16} />
-                  Отменить бронь
-                </TabsTrigger>
-              </TabsList>
+        <div className="max-w-6xl mx-auto">
+          <Tabs defaultValue="booking" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-2 bg-slate-800 border-slate-700">
+              <TabsTrigger
+                value="booking"
+                className="text-slate-300 data-[state=active]:text-white data-[state=active]:bg-orange-500"
+              >
+                <Icon name="Calendar" className="w-4 h-4 mr-2" />
+                Бронирование
+              </TabsTrigger>
+              <TabsTrigger
+                value="cancel"
+                className="text-slate-300 data-[state=active]:text-white data-[state=active]:bg-red-500"
+              >
+                <Icon name="X" className="w-4 h-4 mr-2" />
+                Отменить бронь
+              </TabsTrigger>
+            </TabsList>
 
-              <TabsContent value="book">
-                <div
-                  className={`grid gap-8 ${
-                    isMobile ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-2"
-                  }`}
-                >
-                  <TableSelection
-                    tables={tables}
-                    selectedTable={bookingData.selectedTable}
-                    onTableSelect={(tableId) =>
-                      updateBookingData({ selectedTable: tableId })
-                    }
-                  />
-
+            <TabsContent value="booking" className="space-y-6">
+              <div
+                className={`grid gap-6 ${isMobile ? "grid-cols-1" : "grid-cols-2"}`}
+              >
+                <div className="space-y-6 order-2">
                   <DateTimeSelection
-                    selectedDate={bookingData.selectedDate}
-                    selectedStartTime={bookingData.selectedStartTime}
-                    selectedEndTime={bookingData.selectedEndTime}
-                    guests={bookingData.guests}
-                    phone={bookingData.phone}
-                    name={bookingData.name}
-                    onDateSelect={(date) =>
-                      updateBookingData({ selectedDate: date })
-                    }
-                    onStartTimeSelect={(time) =>
-                      updateBookingData({ selectedStartTime: time })
-                    }
-                    onEndTimeSelect={(time) =>
-                      updateBookingData({ selectedEndTime: time })
-                    }
-                    onGuestsChange={(guests) => updateBookingData({ guests })}
-                    onPhoneChange={(phone) => updateBookingData({ phone })}
-                    onNameChange={(name) => updateBookingData({ name })}
+                    bookingData={bookingData}
+                    updateBookingData={updateBookingData}
                   />
-
-                  <div className="lg:col-span-2">
-                    <PreOrderSection
-                      menuItems={menuItems}
-                      selectedItems={bookingData.selectedItems}
-                      onItemChange={(itemId, quantity) =>
-                        updateBookingData({
-                          selectedItems: {
-                            ...bookingData.selectedItems,
-                            [itemId]: quantity,
-                          },
-                        })
-                      }
-                    />
-
-                    <Button
-                      className="w-full mt-6 bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white py-3 text-lg"
-                      onClick={handleBooking}
-                      disabled={!bookingData.selectedTable}
-                    >
-                      🔥 Забронировать столик{" "}
-                      {bookingData.selectedTable
-                        ? `#${bookingData.selectedTable}`
-                        : ""}
-                    </Button>
-                  </div>
                 </div>
-              </TabsContent>
 
-              <TabsContent value="cancel">
-                <CancelBooking />
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+                <TableSelection
+                  tables={tables}
+                  selectedTable={bookingData.selectedTable}
+                  onTableSelect={(tableId) =>
+                    updateBookingData({ selectedTable: tableId })
+                  }
+                />
+              </div>
+
+              <PreOrderSection
+                menuItems={menuItems}
+                selectedItems={bookingData.selectedItems}
+                updateSelectedItems={(items) =>
+                  updateBookingData({ selectedItems: items })
+                }
+                totalAmount={getTotalPreorderAmount()}
+              />
+
+              <div className="flex justify-center">
+                <Button
+                  onClick={handleBooking}
+                  size="lg"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 text-lg font-semibold"
+                >
+                  <Icon name="Calendar" className="w-5 h-5 mr-2" />
+                  Забронировать столик
+                </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="cancel">
+              <CancelBooking />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </section>
   );
