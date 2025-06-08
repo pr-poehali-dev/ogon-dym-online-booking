@@ -4,31 +4,16 @@ import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 
 const CancelBooking = () => {
-  const [cancelPhone, setCancelPhone] = useState<string>("");
   const [cancelBookingId, setCancelBookingId] = useState<string>("");
 
-  const handlePhoneChange = (value: string) => {
-    if (!value.startsWith("+7")) {
-      value = "+7 " + value.replace(/^\+?7?\s*/, "");
-    }
-    setCancelPhone(value);
-  };
-
-  const handlePhoneFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (!e.target.value) {
-      setCancelPhone("+7 ");
-    }
-  };
-
   const handleCancelBooking = () => {
-    if (cancelPhone && cancelBookingId) {
+    if (cancelBookingId) {
       alert(
-        `Бронирование #${cancelBookingId} отменено. Если у вас есть вопросы, звоните по телефону ${cancelPhone}`,
+        `Бронирование #${cancelBookingId} отменено. Если у вас есть вопросы, обращайтесь в поддержку`,
       );
-      setCancelPhone("");
       setCancelBookingId("");
     } else {
-      alert("Пожалуйста, введите номер телефона и ID бронирования");
+      alert("Пожалуйста, введите ID бронирования");
     }
   };
 
@@ -38,25 +23,10 @@ const CancelBooking = () => {
         <h3 className="text-xl font-semibold text-white mb-2">
           Отмена бронирования
         </h3>
-        <p className="text-slate-300">
-          Введите данные для поиска вашего бронирования
-        </p>
+        <p className="text-slate-300">Введите ID бронирования для отмены</p>
       </div>
 
       <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">
-            Номер телефона
-          </label>
-          <Input
-            placeholder="+7 (xxx) xxx-xx-xx"
-            value={cancelPhone}
-            onChange={(e) => handlePhoneChange(e.target.value)}
-            onFocus={handlePhoneFocus}
-            className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
-          />
-        </div>
-
         <div>
           <label className="block text-sm font-medium text-slate-300 mb-2">
             ID бронирования
