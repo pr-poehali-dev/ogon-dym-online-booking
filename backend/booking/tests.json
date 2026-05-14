@@ -1,0 +1,21 @@
+{
+  "tests": [
+    {
+      "name": "POST create booking",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "table_id": 1,
+        "date": "2026-05-20",
+        "start_time": "19:00",
+        "end_time": "21:00",
+        "name": "Тест",
+        "phone": "+7 999 000 00 00",
+        "guests": 2
+      },
+      "expectedStatus": 200,
+      "expectedBody": {"success": true},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
