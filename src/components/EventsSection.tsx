@@ -40,7 +40,7 @@ const EventsSection = () => {
       description: "Атмосферный джазовый вечер с известными музыкантами города",
       price: "от 2000₽",
       image:
-        "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400",
+        "https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/3f345a8b-390f-424e-8ab8-7aa241bbe6c8.jpg",
     },
     {
       id: 2,
@@ -52,7 +52,7 @@ const EventsSection = () => {
         "Завораживающее шоу восточных танцев от профессиональной танцовщицы",
       price: "Бесплатно",
       image:
-        "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400",
+        "https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/01c60da4-2c40-474f-aa20-28981bb6d7c9.jpg",
     },
     {
       id: 3,
@@ -63,7 +63,7 @@ const EventsSection = () => {
       description: "Веселый вечер караоке с призами для лучших исполнителей",
       price: "от 1500₽",
       image:
-        "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400",
+        "https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/2aa6681e-f7d6-4d9e-add0-22fa20e71b21.jpg",
     },
     {
       id: 4,
@@ -75,7 +75,7 @@ const EventsSection = () => {
         "Научитесь готовить идеальный кальян от профессионального кальянщика",
       price: "от 2500₽",
       image:
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400",
+        "https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/dcbb471c-5551-408c-8db4-0aa2234f1a54.jpg",
     },
   ];
 
