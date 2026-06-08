@@ -4,9 +4,14 @@ const ContactSection = () => {
   return (
     <section
       id="contacts"
-      className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+      className="py-20 relative overflow-hidden"
     >
-      <div className="container mx-auto px-4">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/59b13f87-18bf-416a-8ec4-4b9371633caf.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white mb-4">Контакты</h2>
           <p className="text-xl text-slate-300">

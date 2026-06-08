@@ -2,9 +2,14 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-b from-slate-800 to-slate-900"
+      className="py-20 relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/64c4e673-e86d-46f6-937d-0ee075a2325e.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-black/65" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center">
           <h2 className="text-4xl font-bold text-white mb-8">О нас</h2>
           <div className="max-w-4xl mx-auto">
