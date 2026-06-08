@@ -148,9 +148,14 @@ const BookingSection = () => {
   return (
     <section
       id="booking"
-      className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+      className="py-20 relative overflow-hidden"
     >
-      <div className="container mx-auto px-4">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/3f54936e-c015-44c3-a274-83d15209c338.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-black/65" />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-white mb-4">
             Забронировать столик
