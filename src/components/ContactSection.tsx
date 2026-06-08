@@ -10,7 +10,7 @@ const ContactSection = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('https://cdn.poehali.dev/projects/31db462e-48f6-4bdb-b56d-a8c0cdf1742e/files/f40fd4c7-a133-4f7e-820b-5ef8452b9870.jpg')" }}
       />
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/25" />
 
       <div className="relative z-10 flex flex-col flex-1">
         {/* Title area — top, transparent */}
