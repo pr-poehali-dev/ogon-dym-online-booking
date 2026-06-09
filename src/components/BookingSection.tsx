@@ -195,6 +195,9 @@ const BookingSection = () => {
                       <p className="text-orange-400 text-2xl font-bold tracking-widest">{successInfo.cancelCode}</p>
                       <p className="text-slate-400 text-xs mt-1">Сохраните его — он нужен для отмены брони</p>
                     </div>
+                    <div className="bg-green-500/10 border border-green-600/40 rounded-lg p-3 inline-block">
+                      <p className="text-green-300 text-sm">📱 Номер столика с датой и временем бронирования отправили Вам на телефон</p>
+                    </div>
                     <div>
                       <Button
                         className="mt-4 bg-slate-700 hover:bg-slate-600 text-white"

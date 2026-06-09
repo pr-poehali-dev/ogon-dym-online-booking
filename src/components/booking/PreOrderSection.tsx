@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MenuItem } from "@/types/booking";
 
 interface PreOrderSectionProps {
@@ -11,6 +12,7 @@ const PreOrderSection = ({
   selectedItems,
   onItemChange,
 }: PreOrderSectionProps) => {
+  const [showChocolateWarning, setShowChocolateWarning] = useState(false);
   const getTotalPreorderAmount = () => {
     return Object.entries(selectedItems).reduce((total, [itemId, quantity]) => {
       const item = menuItems.find((i) => i.id === itemId);
@@ -42,9 +44,14 @@ const PreOrderSection = ({
               <select
                 className="w-16 p-1 bg-slate-600 border border-slate-500 rounded text-white text-sm"
                 value={selectedItems[item.id] || 0}
-                onChange={(e) =>
-                  onItemChange(item.id, parseInt(e.target.value))
-                }
+                onChange={(e) => {
+                  const val = parseInt(e.target.value);
+                  if (item.id === "chocolate" && val > 0) {
+                    setShowChocolateWarning(true);
+                    return;
+                  }
+                  onItemChange(item.id, val);
+                }}
               >
                 {Array.from({ length: maxQuantity + 1 }, (_, i) => (
                   <option key={i} value={i}>
@@ -60,6 +67,20 @@ const PreOrderSection = ({
 
   return (
     <div className="border-t border-slate-600 pt-6">
+      {showChocolateWarning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-slate-800 border border-orange-500 rounded-xl p-6 max-w-sm mx-4 text-center shadow-2xl">
+            <div className="text-4xl mb-3">⚠️</div>
+            <p className="text-white text-lg font-medium">Извините, данная услуга недоступна</p>
+            <button
+              className="mt-5 px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium"
+              onClick={() => setShowChocolateWarning(false)}
+            >
+              Понятно
+            </button>
+          </div>
+        </div>
+      )}
       <h4 className="text-lg font-semibold text-white mb-4">
         Предварительный заказ (опционально)
       </h4>
